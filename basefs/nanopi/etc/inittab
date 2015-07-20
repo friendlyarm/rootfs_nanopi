@@ -1,0 +1,36 @@
+# /etc/inittab init(8) configuration for BusyBox
+# ---------------------------------------------------------
+#
+# Copyright (C) 2015 FriendlyARM (www.arm9.net)
+# Copyright (C) 1999-2004 by Erik Andersen <andersen@codepoet.org>
+#
+# Begin {
+
+# This is run first except when booting in single-user mode.
+::sysinit:/etc/init.d/rcS
+
+# /bin/sh invocations on selected ttys
+#
+# Start an "askfirst" shell on the console
+::askfirst:-/bin/sh
+
+# Start an "askfirst" shell on /dev/tty1-2
+tty1::askfirst:-/bin/sh
+tty2::askfirst:-/bin/sh
+
+# /sbin/getty invocations for selected ttys
+tty5::respawn:/sbin/getty 38400 tty5
+
+# Getty on a serial line (for a terminal)
+::respawn:/sbin/getty -L 115200 ttyGS0 vt100
+
+# Stuff to do when restarting the init process
+::restart:/sbin/init
+
+# Stuff to do before rebooting
+::ctrlaltdel:/sbin/reboot
+::shutdown:/bin/umount -a -r
+::shutdown:/sbin/swapoff -a
+
+# } End of inittab
+# ---------------------------------------------------------

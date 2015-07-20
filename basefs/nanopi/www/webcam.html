@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>USB摄像头远程显示测试页</title>
+<style type="text/css">
+<!--
+a:link {  color:#FFFFFF; text-decoration: none }
+a:visited { color:#FFFFFF; text-decoration: none}
+a:hover {  color: #FF6600; text-decoration: underline}
+a.develop_item_link:link {color:#FF6600; font-size: 9pt; text-decoration:underline}
+a.left_item_style:hover {color:green; font-size: 9pt; text-decoration:none}
+a.develop_item_style:hover {color:"#00FF00"; font-size: 9pt; text-decoration:none}
+a.download_item_style:hover {color:bule; font-size: 9pt; text-decoration:none}
+a.middle_item_style:hover {color:red; font-size: 12pt; text-decoration:underline}
+a.middle_item_style:link {  color: #000000; text-decoration: none}
+a.middle_item_style:visited { color:#000000; text-decoration: none}
+.STYLE13 {color:#FFFFFF; text-decoration: none}
+.STYLE14 {
+	font-size: 16px;
+	font-weight: bold;
+}
+.STYLE17 {color: #FFFFFF}
+
+-->
+</style>
+
+<script language="JavaScript">
+<!--
+
+var j,old_image;
+function change_over(){
+  var ob=change_over.arguments;
+  for(i=0;i<document.all.length;i++)
+  if(document.all[i].name==ob[0]) j=i;
+  old_image=document.all[j].src;
+  document.all[j].src=ob[1];
+} 
+
+function change_out(){
+  document.all[j].src=old_image;
+}
+//-->
+</script>
+</head>
+
+<body bgcolor="#666666">
+<table width="800" align="center" cellpadding="0">
+<tr>
+  <td width="9">&nbsp;</td>
+  <td width="781" colspan="2"><div align="center"><img src="images/bar.jpg" width="780" height="120" /></div></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td colspan="2"><table width="780" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td width="250"><a href="leds.html" onMouseOut="change_out()" onMouseOver="change_over('Image1','images/bar_left_thick.jpg')"><img src="images/bar_left_soft.jpg" width="250" height="37" border="0" name="Image1"></a></td>
+      <td width="280"><a href="index.html" onMouseOut="change_out()" onMouseOver="change_over('Image2','images/bar_mid_thick.jpg')"><img src="images/bar_mid_soft.jpg" width="280" height="37" border="0" name="Image2"></a></td>
+      <td width="250"><a href="webcam.html" onMouseOut="change_out()" onMouseOver="change_over('Image3','images/bar_right_thick.jpg')"><img src="images/bar_right_thick.jpg" width="250" height="37" border="0" name="Image3"></a></td>
+    </tr>
+  </table></td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td colspan="2">&nbsp;</td>
+</tr>
+<tr>
+  <td>&nbsp;</td>
+  <td colspan="2"><form action="webcam.cgi" method="get" name="WEBCAM-TEST" class="STYLE17">
+    鉴于Java Applet的不安全因素，我们已经取消了通过浏览器查看摄像头的功能，若要使用或者测试摄像头，请参考用户手册相关介绍。
+  </form>  </td>
+</tr>
+
+
+<tr>
+  <td>&nbsp;</td>
+  <td colspan="2" align="center">&nbsp;</td>
+</tr>
+
+<tr>
+  <td height="42">&nbsp;</td>
+  <td colspan="2" background="images/bottom.jpg" height="39" >
+    <div align="center" class="STYLE13"> <strong>This is a web server test page, please</strong> <a href="http://www.arm9.net" class="STYLE14">visit our website </a></div></td>
+</tr>
+</table>
+</body>
+</html>

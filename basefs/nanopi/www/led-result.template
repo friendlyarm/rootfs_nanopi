@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>LED测试结果</title>
+<style type="text/css">
+<!--
+body {
+	background-color: #666666;
+}
+-->
+</style>
+</head>
+<body>
+<p>LED设置已经提交</p>
+<p><a href="leds.html">返回上一页</a></p>
+</body>
+</html>

@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if [ ! -d /sys/class/net/usb0 ]; then
+	exit 1
+fi
+
+echo -n Try to bring usb0 interface up......>/dev/ttySAC0
+
+if [ -f /etc/usb0-setting ] ; then
+	source /etc/usb0-setting
+else
+	IP=192.168.100.1
+	Mask=255.255.255.0
+fi
+
+/sbin/ifconfig usb0 $IP netmask $Mask up
+
+echo Done > /dev/ttySAC0

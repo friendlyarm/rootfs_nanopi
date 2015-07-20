@@ -1,0 +1,65 @@
+#! /bin/sh
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin:
+runlevel=S
+prevlevel=N
+umask 022
+export PATH runlevel prevlevel
+
+#
+#	Trap CTRL-C &c only in this shell so we can interrupt subprocesses.
+#
+trap ":" INT QUIT TSTP
+/bin/hostname FriendlyARM
+
+[ -e /proc/1 ]    || /bin/mount -n -t proc  none /proc
+[ -e /sys/class ] || /bin/mount -n -t sysfs none /sys
+[ -e /dev/tty ]   || /bin/mount    -t ramfs none /dev
+
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+/sbin/mdev -s
+# mounting file system specified in /etc/fstab
+mkdir -p /dev/pts
+mkdir -p /dev/shm
+/bin/mount -n -t devpts none /dev/pts -o mode=0622
+/bin/mount -n -t tmpfs tmpfs /dev/shm
+/bin/mount -n -t ramfs none /tmp
+/bin/mount -n -t ramfs none /var
+mkdir -p /var/empty
+mkdir -p /var/log
+mkdir -p /var/lock
+mkdir -p /var/run
+mkdir -p /var/tmp
+
+/sbin/hwclock -s
+
+syslogd
+/etc/rc.d/init.d/netd start
+echo "                        " > /dev/tty1
+echo "Starting networking..."   > /dev/tty1
+sleep 1
+/bin/chmod 0600 /etc/ssh/ssh_*_key
+/usr/sbin/sshd &
+echo "                        " > /dev/tty1
+echo "Starting ssh daemon..."   > /dev/tty1
+sleep 1
+/etc/rc.d/init.d/httpd start
+echo "                        " > /dev/tty1
+echo "Starting web server..."   > /dev/tty1
+sleep 1
+
+# to reduce data lost at power failed
+mount / -o remount,sync
+
+# install additional modules
+MODULE_PATH=/lib/modules/`uname -r`
+if [ ! -f ${MODULE_PATH}/modules.dep.bb ]; then
+	depmod
+	sleep 1
+fi
+modprobe rtl8192cu 2>/dev/null
+
+/sbin/ifconfig lo 127.0.0.1
+/etc/init.d/ifconfig-eth0
+/etc/init.d/ifconfig-usb0
+

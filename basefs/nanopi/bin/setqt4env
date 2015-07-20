@@ -1,0 +1,37 @@
+#!/bin/sh
+
+if [ -e /etc/friendlyarm-ts-input.conf ] ; then
+	. /etc/friendlyarm-ts-input.conf
+fi
+true	${TSLIB_TSDEVICE:=/dev/touchscreen}
+
+if grep -Ei "\<ctp=(1|2|3)\>" /proc/cmdline >/dev/null; then
+	TSLIB_CONFFILE=/etc/ts-mt.conf
+	echo "-27 13757 -2071768 -9105 -32 34531248 65536 800 480" \
+		>/etc/pointercal
+	sync
+else
+	TSLIB_CONFFILE=/etc/ts.conf
+fi
+
+export TSLIB_TSDEVICE
+export TSLIB_CONFFILE
+
+export TSLIB_PLUGINDIR=/usr/lib/ts
+export TSLIB_CALIBFILE=/etc/pointercal
+
+export QWS_DISPLAY=:1
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export PATH=/bin:/sbin:/usr/bin/:/usr/sbin:/usr/local/bin
+
+export QWS_MOUSE_PROTO="Tslib MouseMan:/dev/input/mice"
+if [ -c ${TSLIB_TSDEVICE} ]; then
+	if [ ! -s /etc/pointercal ] ; then
+		rm /etc/pointercal
+		/usr/bin/ts_calibrate
+	fi
+else
+	export QWS_MOUSE_PROTO="MouseMan:/dev/input/mice"
+fi
+
+export QWS_KEYBOARD=TTY:/dev/tty1
