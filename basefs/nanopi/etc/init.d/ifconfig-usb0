@@ -15,4 +15,10 @@ fi
 
 /sbin/ifconfig usb0 $IP netmask $Mask up
 
+case $Dhcpd in
+1|y|Y)
+	/usr/sbin/udhcpd /etc/udhcpd_usb0.conf
+	;;
+esac
+
 echo Done > /dev/ttySAC0
