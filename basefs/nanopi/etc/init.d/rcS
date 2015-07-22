@@ -63,3 +63,8 @@ modprobe rtl8192cu 2>/dev/null
 /etc/init.d/ifconfig-eth0
 /etc/init.d/ifconfig-usb0
 
+if [ -d /sys/class/net/wlan0 ]; then
+	wpa_supplicant -Dnl80211 -iwlan0 -C/var/run/wpa_supplicant -c/etc/wpa.conf -B
+	wpa_cli -iwlan0 -a/usr/sbin/wpa_action -B
+fi
+
